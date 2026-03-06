@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abdurhaman Mechatronics Solutions</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    
+    <style>
+        :root {
+            --tech-blue: #00d2ff;
+            --deep-navy: #0a192f;
+            --steel: #ccd6f6;
+            --slate: #8892b0;
+            --neon-green: #64ffda;
+            --white: #e6f1ff;
+        }
+
+        /* --- Reset & Base --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            background-color: var(--deep-navy); 
+            color: var(--slate); 
+            font-family: 'Roboto', sans-serif; 
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* --- Custom Scrollbar --- */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--deep-navy); }
+        ::-webkit-scrollbar-thumb { background: var(--slate); border-radius: 10px; }
+
+        /* --- Navigation --- */
+        nav {
+            position: fixed;
+            top: 0; width: 100%;
+            height: 80px;
+            background: rgba(10, 25, 47, 0.85);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 5%;
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(100, 255, 218, 0.1);
+        }
+        .logo { 
+            font-family: 'Orbitron', sans-serif; 
+            color: var(--neon-green); 
+            font-weight: 700; 
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+        }
+        .nav-links { display: flex; list-style: none; gap: 20px; }
+        .nav-links a { 
+            text-decoration: none; 
+            color: var(--white); 
+            font-size: 0.85rem; 
+            transition: 0.3s;
+        }
+        .nav-links a:hover { color: var(--neon-green); }
+
+        /* --- Hero Section --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 10%;
+            background: radial-gradient(circle at 80% 20%, rgba(100, 255, 218, 0.05), transparent);
+        }
+        .hero span { color: var(--neon-green); font-family: 'Orbitron', sans-serif; font-size: 1rem; }
+        .hero h1 { 
+            font-size: clamp(40px, 8vw, 80px); 
+            color: var(--white); 
+            margin: 10px 0;
+            line-height: 1.1;
+        }
+        .hero h2 { font-size: clamp(30px, 5vw, 50px); color: var(--slate); margin-bottom: 20px; }
+        .hero p { max-width: 600px; font-size: 1.1rem; margin-bottom: 40px; }
+        
+        .btn {
+            padding: 18px 30px;
+            border: 1px solid var(--neon-green);
+            color: var(--neon-green);
+            text-decoration: none;
+            border-radius: 4px;
+            width: fit-content;
+            font-weight: 600;
+            transition: 0.3s;
+            background: transparent;
+            cursor: pointer;
+        }
+        .btn:hover { background: rgba(100, 255, 218, 0.1); }
+
+        /* --- Info / Stats Section --- */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 50px 10%;
+            background: rgba(2, 12, 27, 0.5);
+        }
+        .info-card {
+            border-left: 3px solid var(--neon-green);
+            padding: 20px;
+            background: rgba(17, 34, 64, 0.5);
+        }
+        .info-card h3 { color: var(--white); font-size: 1.5rem; }
+        .info-card p { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* --- Portfolio Section --- */
+        #work { padding: 100px 10%; }
+        .section-title { 
+            display: flex; align-items: center; 
+            color: var(--white); font-size: 2rem; margin-bottom: 40px;
+        }
+        .section-title::after {
+            content: ""; display: block; width: 300px; height: 1px;
+            background: var(--slate); margin-left: 20px; opacity: 0.3;
+        }
+
+        .filter-wrapper { margin-bottom: 30px; display: flex; gap: 15px; flex-wrap: wrap; }
+        .f-btn {
+            background: none; border: 1px solid var(--slate); color: var(--slate);
+            padding: 8px 20px; cursor: pointer; border-radius: 20px; transition: 0.3s;
+        }
+        .f-btn.active { border-color: var(--neon-green); color: var(--neon-green); }
+
+        .projects-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        .project-box {
+            background: #112240;
+            padding: 30px;
+            border-radius: 5px;
+            transition: 0.4s;
+            position: relative;
+        }
+        .project-box:hover { transform: translateY(-10px); }
+        .p-icon { font-size: 2rem; color: var(--neon-green); margin-bottom: 20px; }
+        .project-box h3 { color: var(--white); margin-bottom: 10px; }
+        .project-box p { font-size: 0.9rem; margin-bottom: 20px; }
+        .p-tech { list-style: none; display: flex; gap: 15px; font-family: monospace; font-size: 0.8rem; }
+        
+        /* --- Contact --- */
+        #contact { padding: 100px 10%; text-align: center; max-width: 600px; margin: auto; }
+        #contact h2 { color: var(--white); font-size: 3rem; margin-bottom: 20px; }
+        .contact-email { color: var(--neon-green); font-size: 1.2rem; margin-bottom: 30px; display: block; text-decoration: none;}
+
+        form { background: #112240; padding: 30px; border-radius: 10px; text-align: left; }
+        .input-group { margin-bottom: 20px; }
+        label { display: block; color: var(--white); margin-bottom: 5px; font-size: 0.9rem; }
+        input, textarea {
+            width: 100%; padding: 12px; background: var(--deep-navy);
+            border: 1px solid var(--slate); color: var(--white); border-radius: 5px; outline: none;
+        }
+        input:focus { border-color: var(--neon-green); }
+
+        footer { padding: 50px; text-align: center; font-size: 0.8rem; font-family: monospace; }
+
+        /* --- Animations --- */
+        .hidden { opacity: 0; transform: translateY(30px); transition: 1s; }
+        .show { opacity: 1; transform: translateY(0); }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            nav { padding: 0 20px; }
+            .nav-links { display: none; }
+            .hero h1 { font-size: 40px; }
+            .stats-container { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">AM SOLUTIONS</div>
+        <ul class="nav-links">
+            <li><a href="#work">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <header class="hero">
+        <span>Hi, my name is</span>
+        <h1>Abdurhaman Mohammed A.</h1>
+        <h2>Mechatronics & AI Engineer.</h2>
+        <p>I bridge the gap between heavy industry and modern software. With 8 years in the industrial field and 2 years in Full-Stack development, I build systems that don't just run—they optimize.</p>
+        <div style="display: flex; gap: 20px;">
+            <a href="#work" class="btn">Check out my projects!</a>
+            <a href="https://wa.me/251904267186" class="btn" style="background: rgba(100,255,218,0.1)">Chat on WhatsApp</a>
+        </div>
+    </header>
+
+    <section class="info-grid">
+        <div class="info-card">
+            <h3>8 Years</h3>
+            <p>Industrial Experience</p>
+        </div>
+        <div class="info-card">
+            <h3>2 Years</h3>
+            <p>Full-Stack Dev</p>
+        </div>
+        <div class="info-card">
+            <h3>7</h3>
+            <p>Major Projects</p>
+        </div>
+        <div class="info-card">
+            <h3>Dire Dawa</h3>
+            <p>Base Location</p>
+        </div>
+    </section>
+
+    <section id="work">
+        <h2 class="section-title">Some Things I've Built</h2>
+        
+        <div class="filter-wrapper">
+            <button class="f-btn active" onclick="filterProj('all')">All</button>
+            <button class="f-btn" onclick="filterProj('ai')">AI & Automation</button>
+            <button class="f-btn" onclick="filterProj('sys')">Inventory & Dashboards</button>
+        </div>
+
+        <div class="projects-container" id="p-container">
+            <div class="project-box" data-tag="ai">
+                <div class="p-icon">🤖</div>
+                <h3>SBM Smart AI</h3>
+                <p>An AI-powered system that analyzes industrial machine images to detect early signs of failure.</p>
+                <ul class="p-tech">
+                    <li>Firebase</li>
+                    <li>AI Vision</li>
+                    <li>JS</li>
+                </ul>
+                <a href="https://abdurhamanmohammeda-a11y.github.io/Sbm-maintenance-appcrusher-spare-parts/" target="_blank" style="margin-top:20px; display:block; color:var(--neon-green); text-decoration:none;">Live Demo →</a>
+            </div>
+
+            <div class="project-box" data-tag="sys">
+                <div class="p-icon">⚙️</div>
+                <h3>Crusher Inventory</h3>
+                <p>Full-cycle spare parts tracking system for heavy machinery with real-time stock updates.</p>
+                <ul class="p-tech">
+                    <li>Firestore</li>
+                    <li>HTML/CSS</li>
+                    <li>JS</li>
+                </ul>
+            </div>
+
+            <div class="project-box" data-tag="sys">
+                <div class="p-icon">📊</div>
+                <h3>Industrial Dashboard</h3>
+                <p>Real-time monitoring of production lines and maintenance alerts for factory managers.</p>
+                <ul class="p-tech">
+                    <li>DataViz</li>
+                    <li>Firebase</li>
+                </ul>
+            </div>
+
+            <div class="project-box" data-tag="ai">
+                <div class="p-icon">🧠</div>
+                <h3>AI Image Analyzer</h3>
+                <p>Deep learning tool for defect classification on industrial components.</p>
+                <ul class="p-tech">
+                    <li>TensorFlow.js</li>
+                    <li>Web-AI</li>
+                </ul>
+            </div>
+
+            <div class="project-box" data-tag="sys">
+                <div class="p-icon">🕒</div>
+                <h3>Maintenance Logger</h3>
+                <p>Automatic timestamping and reporting system for machine service intervals.</p>
+                <ul class="p-tech">
+                    <li>Full Stack</li>
+                    <li>Cloud</li>
+                </ul>
+            </div>
+
+            <div class="project-box" data-tag="sys">
+                <div class="p-icon">📱</div>
+                <h3>Support Portal</h3>
+                <p>Customer support dashboard with WhatsApp API and subscription tracking.</p>
+                <ul class="p-tech">
+                    <li>WhatsApp API</li>
+                    <li>UI/UX</li>
+                </ul>
+            </div>
+
+            <div class="project-box" data-tag="ai">
+                <div class="p-icon">🔮</div>
+                <h3>Predictive Maintenance</h3>
+                <p>Conceptual AI model to forecast mechanical failures using simulated stress data.</p>
+                <ul class="p-tech">
+                    <li>Prototyping</li>
+                    <li>AI Logic</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2>Get In Touch</h2>
+        <p>I’m currently looking for new opportunities and my inbox is always open. Whether you have a question or just want to say hi, I’ll try my best to get back to you!</p>
+        <a class="contact-email" href="mailto:abdurhamanmohammeda@gmail.com">abdurhamanmohammeda@gmail.com</a>
+        
+        <form id="contactForm">
+            <div class="input-group">
+                <label>Name</label>
+                <input type="text" id="userName" required>
+            </div>
+            <div class="input-group">
+                <label>Email</label>
+                <input type="email" id="userEmail" required>
+            </div>
+            <div class="input-group">
+                <label>Message</label>
+                <textarea id="userMsg" rows="5"></textarea>
+            </div>
+            <button type="submit" class="btn" style="width: 100%;">Send Project Request</button>
+        </form>
+    </section>
+
+    <footer>
+        Designed & Built by Abdurhaman Mohammed Ahamed<br>
+        Dire Dawa / Kabridhar, Ethiopia &copy; 2026
+    </footer>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        // --- PASTE YOUR FIREBASE CONFIG BELOW ---
+        const firebaseConfig = {
+            apiKey: "AIzaSy...",
+            authDomain: "your-app.firebaseapp.com",
+            projectId: "your-project-id",
+            storageBucket: "your-app.appspot.com",
+            messagingSenderId: "123456789",
+            appId: "1:123456789:web:abcdef"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        document.getElementById('contactForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            btn.innerText = "Sending to Cloud...";
+            
+            try {
+                await addDoc(collection(db, "inquiries"), {
+                    name: document.getElementById('userName').value,
+                    email: document.getElementById('userEmail').value,
+                    message: document.getElementById('userMsg').value,
+                    date: new Date()
+                });
+                alert("Thank you! I have received your message.");
+                e.target.reset();
+            } catch (err) {
+                alert("Firebase Error: Make sure your config is correct.");
+                console.error(err);
+            } finally {
+                btn.innerText = "Send Project Request";
+            }
+        });
+    </script>
+
+    <script>
+        // Project Filter Logic
+        function filterProj(tag) {
+            const boxes = document.querySelectorAll('.project-box');
+            const buttons = document.querySelectorAll('.f-btn');
+            
+            buttons.forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+
+            boxes.forEach(box => {
+                box.style.opacity = '0';
+                setTimeout(() => {
+                    if (tag === 'all' || box.getAttribute('data-tag') === tag) {
+                        box.style.display = 'block';
+                        box.style.opacity = '1';
+                    } else {
+                        box.style.display = 'none';
+                    }
+                }, 300);
+            });
+        }
+
+        // Scroll Reveal Animation
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) entry.target.classList.add('show');
+            });
+        });
+
+        document.querySelectorAll('section').forEach(s => {
+            s.classList.add('hidden');
+            observer.observe(s);
+        });
+    </script>
+</body>
+</html>
